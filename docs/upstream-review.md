@@ -4,29 +4,30 @@ By **Retro Erik** — [Research repository](https://github.com/RetroErik/86Box-V
 
 ## Assessment, 27 September 2026
 
-The one-file renderer patch has a successful Windows build and a positive author-verified visual test, so it is a credible **draft PR candidate**. It is not yet a finished upstream submission. The 86Box fork, feature branch, commit, and PR have not been created. Maintainers must still be able to review the implementation and its supported scope against [86Box’s contribution requirements](https://github.com/86Box/86Box/blob/master/CONTRIBUTING.md).
+The one-file renderer patch has a successful Windows build and a positive author-verified visual test. It was submitted as [86Box PR #8135](https://github.com/86Box/86Box/pull/8135) from the separate [RetroErik/86Box fork](https://github.com/RetroErik/86Box), branch `v6355d-160x200x16`, commit `f2240360ebc17a9c521ce2ec80e58354fbea1fe1`. The PR is open for maintainer review; it has not been merged. Only 160×200×16 has been visually verified in 86Box.
 
 The source review found and fixed a mode-metadata omission: the new 16-color path now reports `width / 4` logical pixels and 4 bits per pixel. The 640/512 output-width settings make the renderer iterate over 40/32 VRAM words, writing 16 output entries per word, so the largest written pixel index is 639/511 within the 640-entry line buffer. The two fetched bytes stay inside the selected 8 KB VRAM bank, including when the CRTC memory address wraps. This is a source-level bounds check, not a visual 512-width test.
 
-## Before submitting upstream
+## Follow-up verification and review
 
-1. Check the code against the [ACV-1030 mode-control description](https://www.seasip.info/VintagePC/acv1030.html) and the PC1 hardware observations; explain why the packed-nibble order, CGA line banking, memory-address progression, and bit-6 selection are correct. Visual output alone does not prove the emulation method.
-2. Add a small reproducible test record for mode switching and CRTC start-address behavior. Test the 512-pixel output-width setting if it is intended to be supported. State what remains untested instead of claiming broad hardware equivalence.
-3. Rebuild after the final source edit and check that `git diff --check` and `git apply --cached --check` pass. Confirm the PR diff contains only the intended source file.
-4. Ensure the [PR description](pr-description.md) reflects the exact final test results and any maintainer discussion. Leave the discussion checkbox unchecked until discussion actually occurs.
+1. Compare the implementation with the [ACV-1030 mode-control description](https://www.seasip.info/VintagePC/acv1030.html) and the PC1 hardware observations. Explain the packed-nibble order, CGA line banking, memory-address progression, and bit-6 selection if maintainers request more evidence.
+2. Add reproducible tests for mode switching and CRTC start-address behavior. Prioritize the hardware-confirmed 192-line PC1 setting in a later, separate test task. Test the 512-dot output-width setting if it is intended to be supported. Report each result separately; the current PR claims only the 160×200×16 visual result.
+3. Rebuild and review the diff after any further source edits. The submitted revision built successfully, passed `git diff --check`, and contains only `src/video/vid_cga_v6355.c`.
+4. Update the [PR description](pr-description.md) and live PR as results or maintainer discussion change. The discussion checkbox remains unchecked until discussion actually occurs.
 
 The research repo’s CC BY-NC DOS diagnostics and screenshot are evidence links; they should not be copied into the GPLv2 86Box PR. No new ROM, asset, or dependency is needed for this renderer change.
 
-## Exact workflow for the separate 86Box fork
+## Workflow used for the separate 86Box fork
 
-Open PowerShell in the root of this research checkout, then run these commands **after** the review items are resolved. The patch is already present in the nested `86Box/` checkout; do not apply it again. `gh repo fork` changes its remotes so the fork becomes `origin` and `86Box/86Box` becomes `upstream`.
+The commands below record the contribution workflow, which is **already complete** through PR creation. Do not run them again in the current checkout. The patch was already present in the nested `86Box/` checkout and was not reapplied. `gh repo fork --clone=false --remote=true`, run from inside that checkout, made the fork `origin` and renamed `86Box/86Box` to `upstream`.
 
 ```powershell
 cd .\86Box
 gh auth status
-gh repo fork 86Box/86Box --clone=false --remote=true
+git fetch origin master
+git switch -c v6355d-160x200x16 origin/master
+gh repo fork --clone=false --remote=true
 git remote -v
-git switch -c v6355d-160x200x16
 git diff --check
 git status --short
 git add src/video/vid_cga_v6355.c
@@ -36,7 +37,7 @@ git push -u origin v6355d-160x200x16
 gh pr create --repo 86Box/86Box --base master --head RetroErik:v6355d-160x200x16 --title "video: add Yamaha V6355D 160x200x16 rendering" --body-file ..\docs\pr-description.md
 ```
 
-The staged file list should be exactly `src/video/vid_cga_v6355.c`. If a fork already exists when the command is run, inspect the remotes before adding or renaming them. Use `--draft` with `gh pr create` while the remaining tests and upstream review are pending.
+The staged and published PR file lists were exactly `src/video/vid_cga_v6355.c`. The branch was based on upstream commit `bfcf8558a18ec893ee29693ac02d369909c04e91`. The PR was opened for normal review with its untested cases explicitly listed. If repeating this workflow in a fresh clone, first inspect remotes and branch names because the fork and PR already exist.
 
 ## Research repository publication
 

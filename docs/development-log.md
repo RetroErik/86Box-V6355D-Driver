@@ -2,6 +2,13 @@
 
 By **Retro Erik** — [Research repository](https://github.com/RetroErik/86Box-V6355D-Driver) · [YouTube](https://www.youtube.com/@RetroErik)
 
+## 27 September 2026 — upstream pull request
+
+- Fetched the latest 86Box `master` (`bfcf8558a18ec893ee29693ac02d369909c04e91`) and created branch `v6355d-160x200x16`. The upstream change since the experimental patch base was unrelated to the V6355D source.
+- Built the branch with MSYS2 UCRT64, CMake, and Ninja. The incremental build completed successfully, including the 86Box executable link. `git diff --check` passed.
+- Created the separate [RetroErik/86Box fork](https://github.com/RetroErik/86Box), committed the single-file change as [`f2240360`](https://github.com/RetroErik/86Box/commit/f2240360ebc17a9c521ce2ec80e58354fbea1fe1), and opened [86Box PR #8135](https://github.com/86Box/86Box/pull/8135). The PR diff contains only `src/video/vid_cga_v6355.c`.
+- The PR describes the author-confirmed 160×200×16 image and the CGA/DOS controls. The 192- and 204-line settings, 512-dot output width, other CRTC settings, and other output types remain untested in 86Box. In particular, the hardware-confirmed 192-line setting is a priority for later testing, not a verified PR result.
+
 ## 27 September 2026 — first 86Box graphics milestone
 
 - Compared `CB86H.COM` (`0x3D8 = 0x4A`) with `CB86C.COM` (`0x3D8 = 0x0A`) in the unpatched 86Box Yamaha V6355D device. Both produced the ordinary CGA interpretation.

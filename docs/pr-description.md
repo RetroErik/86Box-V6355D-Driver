@@ -4,7 +4,7 @@ Add packed 160×200×16 rendering to the existing Yamaha V6355D video device. In
 
 This PR changes only `src/video/vid_cga_v6355.c`. It adds no ROM, asset, or dependency. It does not claim support for the 640×200×16 mode or complete PC1/ACV-1030 emulation.
 
-The mode metadata reports `width / 4` logical pixels (160 at 640 output pixels, 128 at 512) and 4 bits per pixel. The existing CGA mode metadata remains unchanged.
+The mode metadata reports `width / 4` logical pixels and 4 bits per pixel. The existing CGA mode metadata remains unchanged.
 
 ## Verification
 
@@ -15,7 +15,7 @@ The mode metadata reports `width / 4` logical pixels (160 at 640 output pixels, 
 - Both DOS comparison binaries were rebuilt from the linked NASM source and matched the published binaries byte for byte.
 - Source-level bounds review: the renderer writes at most 640 entries in the 640-entry line buffer. Both bytes of each word stay within one of the 8 KB CGA banks of the 16 KB VRAM. The mode metadata change rebuilt without warnings.
 
-These manual checks cover this configuration and static diagnostic. Additional CRTC settings, output types, and timing behavior have not been verified.
+Only the 160×200×16 image in the configuration above has been visually verified. The 192- and 204-line settings, the 512-dot output width, additional CRTC settings, other output types, and timing behavior have not been tested with this change in 86Box.
 
 ## Checklist
 

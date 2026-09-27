@@ -12,7 +12,7 @@ By **Retro Erik** — [YouTube: Retro Hardware and Software](https://www.youtube
 
 86Box already includes a Yamaha V6355D video device. This project adds an experimental renderer for the packed 160×200×16 mode selected by bit 6 of port `0x3D8`. The first target is an ACV-1030-style ISA video card in a standard PC/XT or AT. A full Olivetti Prodest PC1 machine profile is a separate future project.
 
-This is the **research repository**: [RetroErik/86Box-V6355D-Driver](https://github.com/RetroErik/86Box-V6355D-Driver). The eventual pull request to [86Box/86Box](https://github.com/86Box/86Box) should contain only the upstream source change and any tests accepted by its maintainers. Research notes, DOS binaries, screenshots, and experimental patches belong here.
+This is the **research repository**: [RetroErik/86Box-V6355D-Driver](https://github.com/RetroErik/86Box-V6355D-Driver). The separate [86Box fork](https://github.com/RetroErik/86Box) contains the [upstream pull request #8135](https://github.com/86Box/86Box/pull/8135), which changes only `src/video/vid_cga_v6355.c`. Research notes, DOS binaries, screenshots, and experimental patches belong here.
 
 | Item | Current result |
 | --- | --- |
@@ -21,8 +21,9 @@ This is the **research repository**: [RetroErik/86Box-V6355D-Driver](https://git
 | DOS return | ESC worked in the patched test |
 | Build | Separate Windows build completed on 27 September 2026 |
 | Scope | One renderer and its mode metadata in `src/video/vid_cga_v6355.c`; no new ROM or dependency |
+| Upstream status | [PR #8135](https://github.com/86Box/86Box/pull/8135) opened on 27 September 2026; maintainer review pending |
 
-The confirmation above is from the author’s manual test. It does not establish support for every V6355D mode, output type, or timing behavior.
+The confirmation above is from the author’s manual test of **160×200×16 only**. The 192-line setting is a priority for future testing, but it has not been tested with this 86Box change. The 204-line setting, 512-dot output width, other output types, and timing behavior are also untested.
 
 ## Quick start
 
@@ -52,7 +53,8 @@ Both test programs write to `B800h`, the framebuffer of the standalone 86Box V63
 | [docs/compatibility.md](docs/compatibility.md) | Confirmed and unconfirmed PC1, ACV-1030, and 86Box behavior |
 | [docs/development-log.md](docs/development-log.md) | Public project history and test milestones |
 | [docs/upstream-review.md](docs/upstream-review.md) | Upstream PR review, blockers, and the fork/branch workflow |
-| [docs/pr-description.md](docs/pr-description.md) | Draft text for the proposed upstream pull request |
+| [docs/pr-description.md](docs/pr-description.md) | Text submitted with [upstream PR #8135](https://github.com/86Box/86Box/pull/8135) |
+| [docs/next-session-prompt-pc1-labs.md](docs/next-session-prompt-pc1-labs.md) | Prompt for a later, separate 192-line demo compatibility task |
 | [patches](patches/README.md) | Experimental patch and application notes |
 | `Screenshots/` | Test evidence from the patched build |
 
