@@ -1,0 +1,2 @@
+# Preserve the upstream diff verbatim, including whitespace in context lines.
+patches/*.patch -whitespace

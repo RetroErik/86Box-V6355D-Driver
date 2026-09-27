@@ -1,0 +1,18 @@
+# Local emulator checkouts and build output
+86Box/
+build/
+*.obj
+*.o
+*.exe
+*.log
+
+# Local handoff notes contain machine-specific paths and disk details.
+PROJECT_STATE.md
+
+# Local ROMs and DOS disk images
+roms/
+*.img
+*.ima
+*.vhd
+
+# DOS .COM diagnostics under tests/ are intentionally tracked.
