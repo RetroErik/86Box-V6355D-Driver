@@ -20,7 +20,7 @@ This is the **research repository**: [RetroErik/86Box-V6355D-Driver](https://git
 | CGA control | `CB86C.COM` showed CGA colors; `CGACAL.EXE` showed all 16 colors |
 | DOS return | ESC worked in the patched test |
 | Build | Separate Windows build completed on 27 September 2026 |
-| Scope | One renderer in `src/video/vid_cga_v6355.c`; no new ROM or dependency |
+| Scope | One renderer and its mode metadata in `src/video/vid_cga_v6355.c`; no new ROM or dependency |
 
 The confirmation above is from the author’s manual test. It does not establish support for every V6355D mode, output type, or timing behavior.
 

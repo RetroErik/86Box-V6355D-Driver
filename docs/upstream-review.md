@@ -6,6 +6,8 @@ By **Retro Erik** — [Research repository](https://github.com/RetroErik/86Box-V
 
 The one-file renderer patch has a successful Windows build and a positive author-verified visual test, so it is a credible **draft PR candidate**. It is not yet a finished upstream submission. The 86Box fork, feature branch, commit, and PR have not been created. Maintainers must still be able to review the implementation and its supported scope against [86Box’s contribution requirements](https://github.com/86Box/86Box/blob/master/CONTRIBUTING.md).
 
+The source review found and fixed a mode-metadata omission: the new 16-color path now reports `width / 4` logical pixels and 4 bits per pixel. The 640/512 output-width settings make the renderer iterate over 40/32 VRAM words, writing 16 output entries per word, so the largest written pixel index is 639/511 within the 640-entry line buffer. The two fetched bytes stay inside the selected 8 KB VRAM bank, including when the CRTC memory address wraps. This is a source-level bounds check, not a visual 512-width test.
+
 ## Before submitting upstream
 
 1. Check the code against the [ACV-1030 mode-control description](https://www.seasip.info/VintagePC/acv1030.html) and the PC1 hardware observations; explain why the packed-nibble order, CGA line banking, memory-address progression, and bit-6 selection are correct. Visual output alone does not prove the emulation method.

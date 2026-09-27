@@ -1,5 +1,5 @@
 diff --git a/src/video/vid_cga_v6355.c b/src/video/vid_cga_v6355.c
-index 20b1d68..6c7b9aa 100644
+index 20b1d68..349b247 100644
 --- a/src/video/vid_cga_v6355.c
 +++ b/src/video/vid_cga_v6355.c
 @@ -75,10 +75,9 @@
@@ -67,3 +67,19 @@ index 20b1d68..6c7b9aa 100644
          v6355_pointer(v6355, pixel);
  
          for (x = 0; x < (width / 16); x++) {
+@@ -835,8 +865,13 @@ v6355_poll(void *priv)
+                         video_res_y /= crtc9 + 1;
+                         video_bpp = 0;
+                     } else if (!(v6355->cgamode & 16)) {
+-                        video_res_x /= 2;
+-                        video_bpp = 2;
++                        if (v6355->cgamode & 0x40) {
++                            video_res_x = width / 4;
++                            video_bpp = 4;
++                        } else {
++                            video_res_x /= 2;
++                            video_bpp = 2;
++                        }
+                     } else
+                         video_bpp = 1;
+                 }

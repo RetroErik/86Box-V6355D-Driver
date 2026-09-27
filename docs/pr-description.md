@@ -4,6 +4,8 @@ Add packed 160×200×16 rendering to the existing Yamaha V6355D video device. In
 
 This PR changes only `src/video/vid_cga_v6355.c`. It adds no ROM, asset, or dependency. It does not claim support for the 640×200×16 mode or complete PC1/ACV-1030 emulation.
 
+The mode metadata reports `width / 4` logical pixels (160 at 640 output pixels, 128 at 512) and 4 bits per pixel. The existing CGA mode metadata remains unchanged.
+
 ## Verification
 
 - Built the patched 86Box source on Windows with MSYS2 UCRT64, CMake, Ninja, GCC, and Qt 5. The changed V6355D source produced no new compiler warnings.
@@ -11,6 +13,7 @@ This PR changes only `src/video/vid_cga_v6355.c`. It adds no ROM, asset, or depe
 - `CB86C.COM` (`0x3D8 = 0x0A`) showed CGA colors, `CGACAL.EXE` showed all 16 colors, and ESC returned to DOS.
 - The unpatched 86Box baseline rendered `CB86H.COM` and `CB86C.COM` identically as ordinary CGA graphics.
 - Both DOS comparison binaries were rebuilt from the linked NASM source and matched the published binaries byte for byte.
+- Source-level bounds review: the renderer writes at most 640 entries in the 640-entry line buffer. Both bytes of each word stay within one of the 8 KB CGA banks of the 16 KB VRAM. The mode metadata change rebuilt without warnings.
 
 These manual checks cover this configuration and static diagnostic. Additional CRTC settings, output types, and timing behavior have not been verified.
 

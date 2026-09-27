@@ -10,6 +10,7 @@ By **Retro Erik** — [Research repository](https://github.com/RetroErik/86Box-V
 `6a83ed30e5d776e6e87e53fec68eaa06144930a7` and modifies only
 `src/video/vid_cga_v6355.c`. It adds the 160×200×16 packed-nibble renderer
 and selects it with bit 6 of port `0x3D8` in low-resolution graphics mode.
+It also reports the logical resolution and 4-bit color depth for this mode.
 Ordinary CGA text and graphics paths remain in place.
 
 ## Applying the patch

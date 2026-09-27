@@ -11,6 +11,7 @@ By **Retro Erik** — [Research repository](https://github.com/RetroErik/86Box-V
 - Rebuilt `CB86H.COM` and `CB86C.COM` from the published NASM source and confirmed byte-for-byte SHA-256 matches with the included binaries.
 - In the patched build, the COLORBAR author confirmed the `CB86H.COM` image and colors as correct. ESC worked, `CB86C.COM` showed CGA colors, and `CGACAL.EXE` showed all 16 colors.
 - The [test screenshot](../Screenshots/Skjermbilde%202026-09-27%20192932.png) is from the patched build with Generic XT, V20 at 16 MHz, 640 KB RAM, Yamaha V6355D, and True colour output.
+- During the publication review, fixed the new mode's reported resolution and color depth (`width / 4`, 4 bits per pixel). A source-level bounds review covered the 640- and 512-pixel output widths, and the driver rebuilt without warnings. No new visual emulator test was run for the 512-pixel setting.
 
 These results verify the static test image in that configuration. Palette protocol, other monitor modes, CRTC edge cases, and full ACV-1030/PC1 equivalence remain open for study.
 
