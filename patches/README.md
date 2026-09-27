@@ -12,6 +12,7 @@ By **Retro Erik** — [Research repository](https://github.com/RetroErik/86Box-V
 and selects it with bit 6 of port `0x3D8` in low-resolution graphics mode.
 It also reports the logical resolution and 4-bit color depth for this mode.
 Ordinary CGA text and graphics paths remain in place.
+The same source change was submitted separately as [86Box PR #8135](https://github.com/86Box/86Box/pull/8135).
 
 ## Applying the patch
 
@@ -25,7 +26,7 @@ git apply path/to/0001-v6355d-160x200x16.patch
 
 Then build 86Box using its [build instructions](https://86box.readthedocs.io/en/latest/dev/buildguide.html). Select a Generic XT with a
 V20 CPU and Yamaha V6355D display type **True colour**. `CB86H.COM` should
-now show 16 broad color bars; `CB86C.COM` should keep the striped CGA view.
+now show the 16-color test pattern; `CB86C.COM` should retain ordinary CGA colors.
 The COLORBAR author confirmed the `CB86H.COM` image and colors in the separate
 patched test build. The same user reported that `CB86C.COM` shows CGA colors,
 `CGACAL.EXE` shows all 16 colors correctly, and ESC works as expected.
@@ -34,10 +35,13 @@ patched test build. The same user reported that `CB86C.COM` shows CGA colors,
 
 The patch has passed `git apply --cached --check` against the unmodified
 upstream index and `git diff --check`. A separate Windows build succeeded on
-27 September 2026. See `PROJECT_STATE.md` for the test scope and remaining
-hardware differences in [compatibility notes](../docs/compatibility.md). The
+27 September 2026. See the public [development log](../docs/development-log.md)
+for the test scope and remaining hardware differences in
+[compatibility notes](../docs/compatibility.md). The
 verified screenshot used a V20 at 16 MHz, 640 KB RAM, and True colour output.
-Other CRTC settings, output types, and modes remain unverified.
+Only 160×200×16 was visually verified. The 192-line setting is a priority for
+later testing; it, other CRTC settings, output types, and modes remain unverified
+in 86Box.
 
 The older patch sketch in `86Box-V6355D-hidden-mode-patch` uses `@@ -XXX`
 hunk headers and must not be presented as a working patch.
