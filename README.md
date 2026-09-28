@@ -23,7 +23,21 @@ This is the **research repository**: [RetroErik/86Box-V6355D-Driver](https://git
 | Scope | One renderer and its mode metadata in `src/video/vid_cga_v6355.c`; no new ROM or dependency |
 | Upstream status | [PR #8135](https://github.com/86Box/86Box/pull/8135) merged on 27 September 2026 |
 
-The upstream PR's visual confirmation covered **160×200×16 only**. Subsequent local tests exercised PC1-Labs demos that program the 192-line setting; the author reported the images and controls working, but the exact number of displayed scanlines was not independently measured. The 204-line setting, 512-dot output width, other output types, and timing behavior remain untested.
+The upstream PR's visual confirmation covered **160×200×16 only**. Later tests used separate 86Box configurations and are recorded below. The 204-line setting, 512-dot output width, and other output types remain untested.
+
+## Tests performed in 86Box
+
+These are the author's visual observations, not automated measurements. The programs in the later tests are 86Box adaptations of the original PC1 demos.
+
+| Configuration and program | Observed result |
+| --- | --- |
+| Generic XT, V20 at 16 MHz, V6355D True colour: `CB86H.COM`, `CB86C.COM`, `CGACAL.EXE` | Hidden 160×200×16 COLORBAR image and colors looked correct; ordinary CGA and all 16 CGA colors worked; ESC returned to DOS. This is the evidence submitted with PR #8135. |
+| Separate V20/V6355D test: `D8C86.COM` with `BANDS.BMP`, `ANOMALY.BMP`, `TALL_C64.BMP` | All three images looked correct. Up/Down moved the color bands; Space started automatic movement. The demo requests 192 lines through V6355D register `0x65=0x08`. |
+| Same PC1-Labs test: `D9B86.COM` with the same three BMPs | The author reported that all images and all Demo9 effects looked good. This demo also requests 192 lines. |
+| V20 and 386 86Box machines with V6355D: `BMP86.COM ANOMALY.BMP` | Image displayed correctly on both. `BMP86.COM` failed on a 286 setup; the failure point is undiagnosed. |
+| V20/V6355D: `B4P86.COM` with a Space Invaders BMP | At 8 MHz the image appeared but flickered heavily; the exact BMP filename was not confirmed. With the same COM at 16 MHz, `SPACE1.BMP` worked correctly according to the author, who supplied a clear screenshot. Other BMP4 inputs and exact palette timing remain untested. |
+
+The Demo8c and Demo9b sources retain the 192-line register value, but the displayed scanline count was not independently measured. The BMP4 results differed between the tested CPU speeds and do not establish timing across other machines. See the [development log](docs/development-log.md) for the test history.
 
 ## Quick start
 
@@ -38,7 +52,9 @@ The upstream PR's visual confirmation covered **160×200×16 only**. Subsequent 
 
 Both test programs write to `B800h`, the framebuffer of the standalone 86Box V6355D device. The original PC1 COLORBAR program writes to `B000h` and is therefore not a direct test of this 86Box card configuration. See [compatibility notes](docs/compatibility.md) for the hardware differences.
 
-## Screenshot
+## Screenshots
+
+`Colorbars in 86box.png` is the original COLORBAR screenshot, renamed from `Skjermbilde 2026-09-27 192932.png` without changing its bytes. `Demo8c in 86box.png` is a separate, later PC1-Labs screenshot.
 
 <p>
 <em>Patched 86Box test build, Generic XT with V20 at 16 MHz and 640 KB RAM, showing the COLORBAR test pattern. The author confirmed that the image and colors match the expected output.</em><br>
@@ -83,15 +99,15 @@ This project was developed with AI-assisted tools (GitHub Copilot, Codex, and si
 
 ## License
 
-The original research documentation and the author's rights in the provided screenshot are © 2026 Dag Erik Hagesæter (Retro Erik), licensed under [Creative Commons Attribution-NonCommercial 4.0 International](LICENSE), as in the [PC1 project](https://github.com/RetroErik/Olivetti-PC1-Hidden-graphics-mode). The included `LICENSE` is the official Creative Commons legal text.
+The original research documentation and the author's rights in the provided screenshots are © 2026 Dag Erik Hagesæter (Retro Erik), licensed under [Creative Commons Attribution-NonCommercial 4.0 International](LICENSE), as in the [PC1 project](https://github.com/RetroErik/Olivetti-PC1-Hidden-graphics-mode). The included `LICENSE` is the official Creative Commons legal text.
 
 | Material | License |
 | --- | --- |
-| Original research documentation and the author's rights in the screenshot | [CC BY-NC 4.0](LICENSE) |
+| Original research documentation and the author's rights in the screenshots | [CC BY-NC 4.0](LICENSE) |
 | `tests/colorbar/` source and DOS binaries | [CC BY-NC 4.0](tests/colorbar/LICENSE) |
 | 86Box-derived source patch in `patches/` | 86Box [GPLv2](COPYING-86BOX); preserve upstream notices |
 
-The CC BY-NC grant does not relicense the GPLv2-derived patch. Third-party elements visible in the screenshot and external sources linked from the documentation retain their own terms.
+The CC BY-NC grant does not relicense the GPLv2-derived patch. Third-party elements visible in the screenshots and external sources linked from the documentation retain their own terms.
 
 ## Contributing
 
