@@ -21,9 +21,9 @@ This is the **research repository**: [RetroErik/86Box-V6355D-Driver](https://git
 | DOS return | ESC worked in the patched test |
 | Build | Separate Windows build completed on 27 September 2026 |
 | Scope | One renderer and its mode metadata in `src/video/vid_cga_v6355.c`; no new ROM or dependency |
-| Upstream status | [PR #8135](https://github.com/86Box/86Box/pull/8135) opened on 27 September 2026; maintainer review pending |
+| Upstream status | [PR #8135](https://github.com/86Box/86Box/pull/8135) merged on 27 September 2026 |
 
-The confirmation above is from the author’s manual test of **160×200×16 only**. The 192-line setting is a priority for future testing, but it has not been tested with this 86Box change. The 204-line setting, 512-dot output width, other output types, and timing behavior are also untested.
+The upstream PR's visual confirmation covered **160×200×16 only**. Subsequent local tests exercised PC1-Labs demos that program the 192-line setting; the author reported the images and controls working, but the exact number of displayed scanlines was not independently measured. The 204-line setting, 512-dot output width, other output types, and timing behavior remain untested.
 
 ## Quick start
 
@@ -42,7 +42,12 @@ Both test programs write to `B800h`, the framebuffer of the standalone 86Box V63
 
 <p>
 <em>Patched 86Box test build, Generic XT with V20 at 16 MHz and 640 KB RAM, showing the COLORBAR test pattern. The author confirmed that the image and colors match the expected output.</em><br>
-<img src="Screenshots/Skjermbilde%202026-09-27%20192932.png" width="70%" alt="Patched 86Box showing the V6355D COLORBAR test pattern">
+<img src="Screenshots/Colorbars%20in%2086box.png" width="70%" alt="Patched 86Box showing the V6355D COLORBAR test pattern">
+</p>
+
+<p>
+<em>Later PC1-Labs Demo8c test in a separate 86Box build. The author reported the image and scrolling controls working; the screenshot alone does not establish an exact 192-line count.</em><br>
+<img src="Screenshots/Demo8c%20in%2086box.png" width="70%" alt="PC1-Labs Demo8c image in 86Box">
 </p>
 
 ## Repository contents

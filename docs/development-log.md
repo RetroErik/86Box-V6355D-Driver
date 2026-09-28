@@ -17,10 +17,16 @@ By **Retro Erik** — [Research repository](https://github.com/RetroErik/86Box-V
 - Rebuilt the driver after the final comment and formatting edits; the incremental build completed without warnings. The experimental patch passed `git diff --check` and `git apply --cached --check` against the upstream index.
 - Rebuilt `CB86H.COM` and `CB86C.COM` from the published NASM source and confirmed byte-for-byte SHA-256 matches with the included binaries.
 - In the patched build, the COLORBAR author confirmed the `CB86H.COM` image and colors as correct. ESC worked, `CB86C.COM` showed CGA colors, and `CGACAL.EXE` showed all 16 colors.
-- The [test screenshot](../Screenshots/Skjermbilde%202026-09-27%20192932.png) is from the patched build with Generic XT, V20 at 16 MHz, 640 KB RAM, Yamaha V6355D, and True colour output.
+- The [test screenshot](../Screenshots/Colorbars%20in%2086box.png) is from the patched build with Generic XT, V20 at 16 MHz, 640 KB RAM, Yamaha V6355D, and True colour output.
 - During the publication review, fixed the new mode's reported resolution and color depth (`width / 4`, 4 bits per pixel). A source-level bounds review covered the 640- and 512-pixel output widths, and the driver rebuilt without warnings. No new visual emulator test was run for the 512-pixel setting.
 
 These results verify the static test image in that configuration. Palette protocol, other monitor modes, CRTC edge cases, and full ACV-1030/PC1 equivalence remain open for study.
+
+## 28 September 2026 — later local compatibility tests
+
+- [86Box PR #8135](https://github.com/86Box/86Box/pull/8135) was merged on 27 September 2026. Its submitted visual evidence covered the 160×200×16 COLORBAR test; the following observations are separate later tests.
+- The author reported that adapted PC1-Labs `D8C86.COM` worked with `BANDS.BMP`, `ANOMALY.BMP`, and `TALL_C64.BMP`, including manual and automatic vertical movement. The [Demo8c screenshot](../Screenshots/Demo8c%20in%2086box.png) records one displayed image. The author also reported `D9B86.COM` working with all three BMPs on the test floppy and all Demo9 effects. The register setup requests 192 lines, but an exact scanline count was not independently measured.
+- In separate PC1-BMP tests, the author reported `BMP86.COM ANOMALY.BMP` working on V20 and 386 machines with the V6355D in 86Box, and `B4P86.COM SPACE1.BMP` working visually at V20 16 MHz. `BMP86.COM` failed on a 286 setup for an undiagnosed reason; at V20 8 MHz the BMP4 image flickered heavily. These observations do not establish every CPU or per-scanline palette timing combination.
 
 ## Sources and scope
 

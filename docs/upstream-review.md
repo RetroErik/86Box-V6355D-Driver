@@ -4,16 +4,16 @@ By **Retro Erik** — [Research repository](https://github.com/RetroErik/86Box-V
 
 ## Assessment, 27 September 2026
 
-The one-file renderer patch has a successful Windows build and a positive author-verified visual test. It was submitted as [86Box PR #8135](https://github.com/86Box/86Box/pull/8135) from the separate [RetroErik/86Box fork](https://github.com/RetroErik/86Box), branch `v6355d-160x200x16`, commit `f2240360ebc17a9c521ce2ec80e58354fbea1fe1`. The PR is open for maintainer review; it has not been merged. Only 160×200×16 has been visually verified in 86Box.
+The one-file renderer patch has a successful Windows build and a positive author-verified visual test. It was submitted as [86Box PR #8135](https://github.com/86Box/86Box/pull/8135) from the separate [RetroErik/86Box fork](https://github.com/RetroErik/86Box), branch `v6355d-160x200x16`, commit `f2240360ebc17a9c521ce2ec80e58354fbea1fe1`. The PR was merged on 27 September 2026. Its submitted visual evidence covered only 160×200×16; later local demo observations are recorded in the [development log](development-log.md).
 
 The source review found and fixed a mode-metadata omission: the new 16-color path now reports `width / 4` logical pixels and 4 bits per pixel. The 640/512 output-width settings make the renderer iterate over 40/32 VRAM words, writing 16 output entries per word, so the largest written pixel index is 639/511 within the 640-entry line buffer. The two fetched bytes stay inside the selected 8 KB VRAM bank, including when the CRTC memory address wraps. This is a source-level bounds check, not a visual 512-width test.
 
 ## Follow-up verification and review
 
 1. Compare the implementation with the [ACV-1030 mode-control description](https://www.seasip.info/VintagePC/acv1030.html) and the PC1 hardware observations. Explain the packed-nibble order, CGA line banking, memory-address progression, and bit-6 selection if maintainers request more evidence.
-2. Add reproducible tests for mode switching and CRTC start-address behavior. Prioritize the hardware-confirmed 192-line PC1 setting in a later, separate test task. Test the 512-dot output-width setting if it is intended to be supported. Report each result separately; the current PR claims only the 160×200×16 visual result.
+2. Add reproducible tests for mode switching and CRTC start-address behavior. Measure the exact scanline count in the later PC1-Labs demos that request 192 lines. Test the 512-dot output-width setting if it is intended to be supported. Report each result separately; the submitted PR claimed only the 160×200×16 visual result.
 3. Rebuild and review the diff after any further source edits. The submitted revision built successfully, passed `git diff --check`, and contains only `src/video/vid_cga_v6355.c`.
-4. Update the [PR description](pr-description.md) and live PR as results or maintainer discussion change. The discussion checkbox remains unchecked until discussion actually occurs.
+4. Keep the archived [PR description](pr-description.md) scoped to evidence submitted with the PR. Record later results separately unless there is a specific reason to update the merged PR discussion.
 
 The research repo’s CC BY-NC DOS diagnostics and screenshot are evidence links; they should not be copied into the GPLv2 86Box PR. No new ROM, asset, or dependency is needed for this renderer change.
 

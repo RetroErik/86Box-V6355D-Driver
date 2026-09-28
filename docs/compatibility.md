@@ -28,7 +28,7 @@ mode-control byte. This is the baseline for the experimental patch. In the
 patched build, the author of COLORBAR confirmed the `CB86H.COM` image and
 colors as correct. The user also reported that ESC exits as expected,
 `CB86C.COM` displays CGA colors, and `CGACAL.EXE` displays all 16 colors
-correctly. The [patched-build screenshot](../Screenshots/Skjermbilde%202026-09-27%20192932.png)
+correctly. The [patched-build screenshot](../Screenshots/Colorbars%20in%2086box.png)
 shows a V20 at 16 MHz with 640 KB RAM. These observations cover this Generic XT/V20/True colour setup;
 other card profiles and output types have not been tested.
 
